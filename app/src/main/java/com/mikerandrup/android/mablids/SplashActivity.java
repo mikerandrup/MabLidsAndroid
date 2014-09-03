@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class Splash extends ActionBarActivity {
+public class SplashActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,13 +17,13 @@ public class Splash extends ActionBarActivity {
         Thread t = new Thread() {
             public void run() {
                 try {
-                    sleep(3000);
+                    sleep(2000);
                 }
                 catch (Exception exc) {
                     exc.printStackTrace();
                 }
                 finally {
-                    Intent openMain = new Intent("com.mikerandrup.android.mablids.MAIN");
+                    Intent openMain = new Intent(SplashActivity.this, EssayActivity.class);
                     startActivity(openMain);
                 }
             }
@@ -33,6 +33,7 @@ public class Splash extends ActionBarActivity {
 
     @Override
     public void onPause() {
+        super.onPause();
         finish();
     }
 
