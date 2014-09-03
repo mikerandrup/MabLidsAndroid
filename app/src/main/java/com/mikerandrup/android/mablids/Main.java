@@ -1,45 +1,24 @@
 package com.mikerandrup.android.mablids;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.mikerandrup.android.mablids.R;
 
-
-public class Splash extends ActionBarActivity {
+public class Main extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-
-        Thread t = new Thread() {
-            public void run() {
-                try {
-                    sleep(3000);
-                }
-                catch (Exception exc) {
-                    exc.printStackTrace();
-                }
-                finally {
-                    Intent openMain = new Intent("com.mikerandrup.android.mablids.MAIN");
-                    startActivity(openMain);
-                }
-            }
-        };
-        t.start();
+        setContentView(R.layout.activity_main);
     }
 
-    @Override
-    public void onPause() {
-        finish();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.splash, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -54,6 +33,4 @@ public class Splash extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
