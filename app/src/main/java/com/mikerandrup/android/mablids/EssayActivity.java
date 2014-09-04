@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.mikerandrup.essaybuilder.ReviewEssayBuilder;
+import com.mikerandrup.essaybuilder.AppReviewEssayBuilder;
 import com.mikerandrup.essaycomposable.Essay;
 import com.mikerandrup.essaycomposable.components.BaseComponent;
 import com.mikerandrup.essaycomposable.components.dynamicwords.DynamicWordComponent;
@@ -35,7 +35,7 @@ public class EssayActivity extends ActionBarActivity {
         prompt = (EditText) findViewById(R.id.etPrompt);
         essayOutput = (TextView) findViewById(R.id.tvEssayOutput);
 
-        essay = new ReviewEssayBuilder().build();
+        essay = new AppReviewEssayBuilder().build();
         advancePromptOrFinish();
 
         nextButton.setOnClickListener( new View.OnClickListener() {
