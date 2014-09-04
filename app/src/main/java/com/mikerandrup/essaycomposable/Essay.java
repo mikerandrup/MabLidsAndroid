@@ -11,12 +11,12 @@ public class Essay {
     }
     private List<BaseComponent> components;
 
-    public Essay Append(BaseComponent comp) {
+    public Essay append(BaseComponent comp) {
         components.add(comp);
         return this;
     }
 
-    public boolean HasUnansweredComponent() {
+    public boolean hasUnansweredComponent() {
         for (BaseComponent c : components) {
             if (c.isNotAnswered()) {
                 return true;
@@ -25,7 +25,7 @@ public class Essay {
         return false;
     }
 
-    public BaseComponent GetNextUnansweredComponent() {
+    public BaseComponent getNextUnansweredComponent() {
         for (BaseComponent c : components) {
             if (c.isNotAnswered()) {
                 return c;

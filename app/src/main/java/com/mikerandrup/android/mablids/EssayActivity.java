@@ -1,15 +1,20 @@
 package com.mikerandrup.android.mablids;
 
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.mikerandrup.essaybuilder.ReviewEssayBuilder;
 import com.mikerandrup.essaycomposable.Essay;
+import com.mikerandrup.essaycomposable.components.BaseComponent;
+import com.mikerandrup.essaycomposable.components.dynamicwords.DynamicWordComponent;
 
 public class EssayActivity extends ActionBarActivity {
 
@@ -30,22 +35,33 @@ public class EssayActivity extends ActionBarActivity {
         prompt = (EditText) findViewById(R.id.etPrompt);
         essayOutput = (TextView) findViewById(R.id.tvEssayOutput);
 
-        essay = new Essay();
+        essay = new ReviewEssayBuilder().build();
+        advancePromptOrFinish();
 
         nextButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowOutput();
+                String providedValue = prompt.getText().toString();
+                BaseComponent essayComponentForValue = essay.getNextUnansweredComponent();
+                essayComponentForValue.setValue(providedValue);
+
+                advancePromptOrFinish();
             }
         });
-
-        ShowPrompt("expletive");
     }
 
-    private void ShowPrompt(String thingToPromptFor) {
-        essayOutput.setVisibility(View.INVISIBLE);
+    private void advancePromptOrFinish() {
+        if (essay.hasUnansweredComponent()) {
+            String nextNeededWordType = ((DynamicWordComponent) essay.getNextUnansweredComponent()).getWordTypeAndHint();
+            showPrompt(nextNeededWordType);
+        }
+        else {
+            showOutput();
+        }
+    }
 
-        String promptText = "Provide " + thingToPromptFor;
+    private void showPrompt(String promptText) {
+        essayOutput.setVisibility(View.INVISIBLE);
 
         promptLabel.setText(promptText);
         promptLabel.setVisibility(View.VISIBLE);
@@ -53,13 +69,18 @@ public class EssayActivity extends ActionBarActivity {
         nextButton.setVisibility(View.VISIBLE);
 
         prompt.setHint(promptText);
+        prompt.setText("");
         prompt.setVisibility(View.VISIBLE);
+
     }
 
-    private void ShowOutput() {
+    private void showOutput() {
         promptLabel.setVisibility(View.INVISIBLE);
         nextButton.setVisibility(View.INVISIBLE);
         prompt.setVisibility(View.INVISIBLE);
+
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(prompt.getWindowToken(), 0);
 
         essayOutput.setText(essay.toString());
         essayOutput.setVisibility(View.VISIBLE);

@@ -3,11 +3,22 @@ package com.mikerandrup.essaycomposable.components.dynamicwords;
 import com.mikerandrup.essaycomposable.components.BaseComponent;
 
 public class DynamicWordComponent extends BaseComponent {
-
-    public void SetValue(String val) {
-        value = val;
+    public DynamicWordComponent() {
+        value = null;
     }
-    public String GetWordType() {
+
+    public DynamicWordComponent(String hint) {
+        hintText = hint;
+        value = null;
+    }
+
+    protected String hintText = "";
+
+    public String getWordType() {
         return this.getClass().getSimpleName().toString();
+    }
+
+    public String getWordTypeAndHint() {
+        return getWordType() + ((hintText=="") ? "" : (" ("+hintText+")"));
     }
 }

@@ -40,12 +40,13 @@
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/btNext"
         android:visibility="invisible"
-        android:layout_alignEnd="@+id/btNext" />
+        android:layout_alignEnd="@+id/btNext"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
+        android:textSize="26sp"
         android:id="@+id/tvEssayOutput"
         android:layout_below="@+id/etPrompt"
         android:layout_alignParentLeft="true"
