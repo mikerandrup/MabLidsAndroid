@@ -10,7 +10,7 @@ import com.mikerandrup.essaycomposable.components.dynamicwords.Number;
 public class AppReviewEssayBuilder {
 
     public Essay build() {
-        return new Essay()
+        return new Essay("App Store Review")
                 .append(new Number())
                 .append(new StaticComponent(" out of 5 stars! "))
                 .append(new Adjective())

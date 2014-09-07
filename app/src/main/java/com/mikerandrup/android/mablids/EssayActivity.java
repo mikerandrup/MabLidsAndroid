@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.mikerandrup.essaybuilder.AppReviewEssayBuilder;
@@ -23,7 +24,10 @@ public class EssayActivity extends ActionBarActivity {
     private TextView promptLabel;
     private Button nextButton;
     private EditText prompt;
-    private TextView essayOutput;
+    private EditText essayOutput;
+
+    private TextView progressLabel;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,10 @@ public class EssayActivity extends ActionBarActivity {
         promptLabel = (TextView) findViewById(R.id.tvPrompt);
         nextButton = (Button) findViewById(R.id.btNext);
         prompt = (EditText) findViewById(R.id.etPrompt);
-        essayOutput = (TextView) findViewById(R.id.tvEssayOutput);
+        essayOutput = (EditText) findViewById(R.id.etEssayOutput);
+
+        progressLabel = (TextView) findViewById(R.id.tvProgressLabel);
+        progressBar = (ProgressBar) findViewById(R.id.pbProgress);
 
         essay = new AppReviewEssayBuilder().build();
         advancePromptOrFinish();
@@ -68,16 +75,39 @@ public class EssayActivity extends ActionBarActivity {
 
         nextButton.setVisibility(View.VISIBLE);
 
+        updateProgress();
+        progressLabel.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
+
         prompt.setHint("Enter " + promptText);
         prompt.setText("");
         prompt.setVisibility(View.VISIBLE);
+    }
 
+    private void updateProgress() {
+
+        float total = essay.getMaxUnansweredCount();
+        float remaining = essay.getUnansweredCount();
+        float complete = total - remaining;
+        int percentComplete = 0;
+
+        if (total > 0) {
+            percentComplete = (int)(complete/total * 100); // floats might be nicer... try in practice
+        }
+
+        progressBar.setProgress(percentComplete);
+
+        String pluralGrammar = remaining == 1 ? " word needs " : " words need ";
+        progressLabel.setText((int)remaining + " of " + (int)total + pluralGrammar + "answering.");
     }
 
     private void showOutput() {
         promptLabel.setVisibility(View.INVISIBLE);
         nextButton.setVisibility(View.INVISIBLE);
         prompt.setVisibility(View.INVISIBLE);
+
+        progressLabel.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
 
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(prompt.getWindowToken(), 0);
