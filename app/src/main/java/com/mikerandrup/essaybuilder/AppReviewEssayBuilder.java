@@ -5,12 +5,13 @@ import com.mikerandrup.essaycomposable.components.StaticComponent;
 import com.mikerandrup.essaycomposable.components.dynamicwords.Adjective;
 import com.mikerandrup.essaycomposable.components.dynamicwords.Noun;
 import com.mikerandrup.essaycomposable.components.dynamicwords.Verb;
+import com.mikerandrup.essaycomposable.components.dynamicwords.Number;
 
 public class AppReviewEssayBuilder {
 
     public Essay build() {
         return new Essay()
-                .append(new Noun("number"))
+                .append(new Number())
                 .append(new StaticComponent(" out of 5 stars! "))
                 .append(new Adjective())
                 .append(new Noun("plural"))

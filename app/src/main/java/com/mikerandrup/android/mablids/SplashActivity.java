@@ -17,7 +17,7 @@ public class SplashActivity extends ActionBarActivity {
         Thread t = new Thread() {
             public void run() {
                 try {
-                    sleep(2000);
+                    sleep(3500);
                 }
                 catch (Exception exc) {
                     exc.printStackTrace();

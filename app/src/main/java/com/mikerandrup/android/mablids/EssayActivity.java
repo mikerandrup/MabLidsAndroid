@@ -68,7 +68,7 @@ public class EssayActivity extends ActionBarActivity {
 
         nextButton.setVisibility(View.VISIBLE);
 
-        prompt.setHint(promptText);
+        prompt.setHint("Enter " + promptText);
         prompt.setText("");
         prompt.setVisibility(View.VISIBLE);
 
@@ -89,7 +89,11 @@ public class EssayActivity extends ActionBarActivity {
     @Override
     public void onPause() {
         super.onPause();
-        finish();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
