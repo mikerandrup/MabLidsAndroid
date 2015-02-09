@@ -92,7 +92,7 @@ public class EssayActivity extends ActionBarActivity {
         int percentComplete = 0;
 
         if (total > 0) {
-            percentComplete = (int)(complete/total * 100); // floats might be nicer... try in practice
+            percentComplete = (int)(complete/total * 100);
         }
 
         progressBar.setProgress(percentComplete);

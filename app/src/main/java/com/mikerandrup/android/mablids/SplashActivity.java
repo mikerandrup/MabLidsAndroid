@@ -1,34 +1,62 @@
 package com.mikerandrup.android.mablids;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.view.View;
+import android.widget.TextView;
 
 public class SplashActivity extends ActionBarActivity {
+
+    private TextView tvPrefix;
+    private TextView tvWord;
+    private TextView tvSuffix;
+
+    private String[] wordList = new String[] {
+            "substitution",
+            "confusion",
+            "replacement",
+            "mutilation"
+    };
+    int wordIndex = 0;
+
+    private int delayMs = 1000;
+
+    private Handler mHandler = new Handler();
+
+    private final Runnable mUpdateWordOrLaunchMainActivity = new Runnable() {
+        @Override
+        public void run() {
+            if (wordIndex<wordList.length) {
+                tvWord.setText(wordList[wordIndex]);
+                wordIndex++;
+
+                tvPrefix.setVisibility(View.VISIBLE);
+                tvWord.setVisibility(View.VISIBLE);
+                tvSuffix.setVisibility(View.VISIBLE);
+
+                mHandler.postDelayed(mUpdateWordOrLaunchMainActivity, delayMs);
+            }
+            else {
+                Intent openMain = new Intent(SplashActivity.this, EssayActivity.class);
+                startActivity(openMain);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        Thread t = new Thread() {
-            public void run() {
-                try {
-                    sleep(3500);
-                }
-                catch (Exception exc) {
-                    exc.printStackTrace();
-                }
-                finally {
-                    Intent openMain = new Intent(SplashActivity.this, EssayActivity.class);
-                    startActivity(openMain);
-                }
-            }
-        };
-        t.start();
+        tvPrefix = (TextView) findViewById(R.id.tvPrefix);
+        tvWord = (TextView) findViewById(R.id.tvWord);
+        tvSuffix = (TextView) findViewById(R.id.tvSuffix);
+
+        mHandler.postDelayed(mUpdateWordOrLaunchMainActivity, delayMs);
     }
 
     @Override
@@ -55,6 +83,4 @@ public class SplashActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
